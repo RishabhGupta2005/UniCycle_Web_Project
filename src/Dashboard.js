@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from 'react';
 
 function Dashboard({ userData, onLogout }) {
-  const [activeCycles, setActiveCycles] = useState([]);
+  // Load rental data from localStorage or initialize empty arrays
+  const [activeCycles, setActiveCycles] = useState(() => {
+    const savedActiveCycles = localStorage.getItem(`activeCycles_${userData.regNumber}`);
+    return savedActiveCycles ? JSON.parse(savedActiveCycles) : [];
+  });
+  
   const [activeTab, setActiveTab] = useState('available');
-  const [rentalHistory, setRentalHistory] = useState([]);
+  
+  const [rentalHistory, setRentalHistory] = useState(() => {
+    const savedRentalHistory = localStorage.getItem(`rentalHistory_${userData.regNumber}`);
+    return savedRentalHistory ? JSON.parse(savedRentalHistory) : [];
+  });
   
   // Pricing data
   const pricingRates = {
@@ -22,6 +31,15 @@ function Dashboard({ userData, onLogout }) {
     { id: 5, name: 'Folding Bike', location: 'SJT', batteryLevel: '90%', type: 'Folding Bike', image: '/fold-bike.png' }
   ];
   
+  // Save activeCycles to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem(`activeCycles_${userData.regNumber}`, JSON.stringify(activeCycles));
+  }, [activeCycles, userData.regNumber]);
+
+  // Save rentalHistory to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem(`rentalHistory_${userData.regNumber}`, JSON.stringify(rentalHistory));
+  }, [rentalHistory, userData.regNumber]);
 
   // Update active rentals every minute to refresh pricing
   useEffect(() => {
@@ -154,7 +172,6 @@ function Dashboard({ userData, onLogout }) {
     </div>
   );
   
-
   const renderActiveRentals = () => (
     <div className="active-rentals">
       <h2>My Active Rentals</h2>
@@ -218,7 +235,7 @@ function Dashboard({ userData, onLogout }) {
               <div className="history-item" key={index}>
                 <div className="history-header">
                   <h3>{rental.name}</h3>
-                  <span className="history-price">${rental.totalPrice}</span>
+                  <span className="history-price">Rs {rental.totalPrice}</span>
                 </div>
                 <div className="history-details">
                   <p><strong>Location:</strong> {rental.location}</p>

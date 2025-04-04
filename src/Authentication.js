@@ -162,6 +162,14 @@ function Authentication() {
           <p>Rishabh Gupta 23BCE0390</p>
           <p>guptarishabh.manish2023@vitstudent.ac.in</p>
           <p>(91) 8668232675</p>
+          <div className="social-links">
+            <a href="https://github.com/RishabhGupta2005" target="_blank" rel="noopener noreferrer" className="social-icon">
+              <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" />
+            </a>
+            <a href="https://www.linkedin.com/in/rishabh-gupta-252a1b28a/" target="_blank" rel="noopener noreferrer" className="social-icon">
+              <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" />
+            </a>
+          </div>
         </div>
       </div>
       <div className="footer-bottom">
